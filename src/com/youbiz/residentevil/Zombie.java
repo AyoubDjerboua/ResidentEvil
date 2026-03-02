@@ -12,16 +12,24 @@ public class Zombie {
         this.zombieDamage = zombieDamage;
     }
 
+    public void attack(Player player)
+    {
+        System.out.println(zombieName + " attaque " + player.getName());
+        player.takeDamage(zombieDamage);
+    }
+
+    public void attackBlocked(Player player)
+    {
+        int reducedDamage = zombieDamage - player.getBlockValue();
+        if(reducedDamage < 0) reducedDamage = 0; //évite de gagner des PV sur block
+        System.out.println( "L'attaque de " + zombieName + " est bloquée. Dégâts réduits de " + player.getBlockValue());
+        player.takeDamage(reducedDamage);
+    }
+
     public void takeDamage(int damage) //quand le zombie se prend une attaque
     {
         zombieHealth -= damage; //réduit ses HP de "damage"
         System.out.println(zombieName + " perd " + damage + " points de vie");//message de bobo
-    }
-
-    public void attack(Player player)
-    {
-        System.out.println(zombieName + " attaque " + player.getName() + " !");
-        player.takeDamage(zombieDamage);
     }
 
     public boolean isAlive() {

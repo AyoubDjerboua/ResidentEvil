@@ -4,12 +4,20 @@ public class Player {
     private String playerName;
     private int playerHealth;
     private int playerDamage;
+    private int blockValue;
 
-    public Player ()
+    public Player (String name, int health, int damage, int block)
     {
-        this.playerName = "Chris Redfield";
-        this.playerHealth = 100;
-        this.playerDamage = 25;
+        this.playerName = name;
+        this.playerHealth = health;
+        this.playerDamage = damage;
+        this.blockValue = block;
+    }
+
+    public void attack(Zombie zombie)
+    {
+        System.out.println(playerName + " attaque le " + zombie.getName());
+        zombie.takeDamage(playerDamage);
     }
 
     public void takeDamage(int damage)
@@ -18,7 +26,16 @@ public class Player {
         System.out.println(playerName + " perd " + damage + " points de vie !");
     }
 
-    public boolean isAlive() {
+    public void takeDamageBlocked(int damage)
+    {
+        int reduced = damage - blockValue;
+        if(reduced < 0) reduced = 0;
+        playerHealth -= reduced;
+        System.out.println(playerName + " bloque l'attaque et ne perd que " + reduced + " points de vie !");
+    }
+
+    public boolean isAlive()
+    {
         return playerHealth > 0;
     }
 
@@ -35,6 +52,7 @@ public class Player {
         return playerDamage;
     }
 
-
-
+    public int getBlockValue() {
+        return blockValue;
+    }
 }
