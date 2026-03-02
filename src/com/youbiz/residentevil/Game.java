@@ -9,8 +9,7 @@ public class Game
 
     public void start()
     {
-        System.out.println("RESIDENT EVIL");
-        System.out.println("Choisissez votre personnage : ");
+        System.out.println("RESIDENT EVIL\nChoisissez votre personnage :");
         System.out.println("1. Chris Redfield (100 HP, 15 dégâts, 15 de défense");
         System.out.println("2. Jill Valentine (80HP, 20 dégâts , 5 de défense");
 
@@ -34,30 +33,37 @@ public class Game
         }
         System.out.println(player.getName() + " entre dans le manoir");
 
-        zombie = new Zombie("Zombie", 60, 15);
 
-        //System.out.println(player.getName() + " entre dans la pièce");
+        zombie = new Zombie("Zombie", 60, 15);
         System.out.println(player.getName() + " tombe nez à nez avec un zombie !\n");
-        fight();
+
+        boolean alive = fight();
+        if(alive)
+        {
+            System.out.println("\nVous entendez du bruit provenant d'une pièce voisine.\nVoulez-vous continuer ?\n1.Oui\n2.Non\n");
+            String continueChoice = scanner.nextLine();
+
+            if(continueChoice.equals("1"))
+            {
+                secondEncounter();
+            }
+            else {
+                System.out.println("Vous quittez le manoir, votre corps demeurera introuvable...");
+            }
+        }
+
     }
 
-    private void fight()
-    {
-        System.out.println("""
-====================
-   COMBAT START
-====================
 
-Le zombie approche...
-""");
+
+    private boolean fight()
+    {
+        System.out.println("DEBUT DU COMBAT\nLe zombie approche...\n");
         while(player.isAlive() && zombie.isAlive())
         {
-            System.out.println(player.getName() + " :" + player.getHealth() + "PV");
-            System.out.println(zombie.getName() + " :" + zombie.getHealth() + "PV");
-            System.out.println("");
-            System.out.println("Que voulez-vous faire ?");
-            System.out.println("1. Attaquer");
-            System.out.println("2. Bloquer");
+            System.out.println(player.getName() + " : " + player.getHealth() + "PV");
+            System.out.println(zombie.getName() + " : " + zombie.getHealth() + "PV");
+            System.out.println("\nQue voulez-vous faire ?\n1. Attaquer\n2. Bloquer");
             String battleChoice = scanner.nextLine();
 
             if(battleChoice.equals("1")) {
@@ -78,22 +84,28 @@ Le zombie approche...
                 {
                     zombie.attack(player);
                 }
-                System.out.println("""
-------------------------
-Tour suivant !
-------------------------
-""");
+                System.out.println("\nTOUR SUIVANT\n");
             }
 
         }
         if(player.isAlive()){
             System.out.println(player.getName() + " a vaincu le zombie !");
+            return true; //rend possible le fait de continuer la partie
         }
         else
         {
             System.out.println(player.getName() + " est mort...");
+            return false;//rend impossible de continuer la partie, bah oui t'es mort
         }
     }
+
+    private void secondEncounter()
+    {
+        System.out.println("NOUVELLE SALLE\nUn nouveau zombie surgit !\n");
+        zombie = new Zombie("Zombie affamé", 80, 20);
+        fight();
+    }
+
 
     private void avancer()
     {
