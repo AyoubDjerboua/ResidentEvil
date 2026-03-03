@@ -5,6 +5,7 @@ public class Player {
     private int playerHealth;
     private int playerDamage;
     private int blockValue;
+    private int playerPosition;
 
     public Player (String name, int health, int damage, int block)
     {
@@ -12,6 +13,7 @@ public class Player {
         this.playerHealth = health;
         this.playerDamage = damage;
         this.blockValue = block;
+        this.playerPosition = 0;
     }
 
     public void attack(Zombie zombie)
@@ -34,6 +36,11 @@ public class Player {
         System.out.println(playerName + " bloque l'attaque et ne perd que " + reduced + " points de vie !");
     }
 
+    public void move(int steps)
+    {
+        playerPosition += steps;
+    }
+
     public boolean isAlive()
     {
         return playerHealth > 0;
@@ -54,5 +61,9 @@ public class Player {
 
     public int getBlockValue() {
         return blockValue;
+    }
+
+    public int getPlayerPosition(){
+        return playerPosition;
     }
 }
