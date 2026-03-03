@@ -1,11 +1,13 @@
 package com.youbiz.residentevil;
 import java.util.Scanner;
+import java.util.Random;
 
 public class Game
 {
     private Player player;
     private Zombie zombie;
     Scanner scanner = new Scanner(System.in);
+    Random random = new Random();
 
     public void start()
     {
@@ -32,7 +34,10 @@ public class Game
             System.out.println("Choix invalide, vous jouez un zombie");
         }
         System.out.println(player.getName() + " entre dans le manoir");
-
+        for(int i = 0; i < 5; i++) //nombre de fois qu'on lance le dé avant la fin du jeu
+        {
+            avancer();
+        }
 
         zombie = new Zombie("Zombie", 60, 15);
         System.out.println(player.getName() + " tombe nez à nez avec un zombie !\n");
@@ -53,8 +58,6 @@ public class Game
         }
 
     }
-
-
 
     private boolean fight()
     {
@@ -99,6 +102,8 @@ public class Game
         }
     }
 
+
+
     private void secondEncounter()
     {
         System.out.println("NOUVELLE SALLE\nUn nouveau zombie surgit !\n");
@@ -107,8 +112,20 @@ public class Game
     }
 
 
+    private int rollDice()
+    {
+        return random.nextInt(6)+1;
+    }
+
     private void avancer()
     {
+        System.out.println("Appuyez sur Entrée pour lancer le dé...");
+        scanner.nextLine();
 
+        int dice = rollDice();
+        System.out.println("Résultat du dé : "+ dice);
+
+        player.move(dice);
+        System.out.println(player.getName() + " est maintenant dans la salle numéro " + player.getPlayerPosition());
     }
 }
