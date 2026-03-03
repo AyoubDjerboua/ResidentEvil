@@ -1,20 +1,20 @@
 package com.youbiz.residentevil;
 import java.util.Scanner;
-import java.util.Random;
 
 public class Game
 {
     private Player player;
     private Zombie zombie;
     Scanner scanner = new Scanner(System.in);
-    Random random = new Random();
 
     public void start()
     {
+        Combat combat = new Combat(scanner);
+
+        // Choix du personnage
         System.out.println("RESIDENT EVIL\nChoisissez votre personnage :");
         System.out.println("1. Chris Redfield (100 HP, 15 dégâts, 15 de défense");
         System.out.println("2. Jill Valentine (80HP, 20 dégâts , 5 de défense");
-
         String choice = scanner.nextLine();
         if(choice.equals("1"))
         {
@@ -34,98 +34,54 @@ public class Game
             System.out.println("Choix invalide, vous jouez un zombie");
         }
         System.out.println(player.getName() + " entre dans le manoir");
-        for(int i = 0; i < 5; i++) //nombre de fois qu'on lance le dé avant la fin du jeu
+
+        Board board = new Board();
+        for(int i = 0; i < 20; i++) // nombre de tours
         {
-            avancer();
-        }
+            board.avancer(player);
+            int position = player.getPlayerPosition();
 
-        zombie = new Zombie("Zombie", 60, 15);
-        System.out.println(player.getName() + " tombe nez à nez avec un zombie !\n");
+            System.out.println("La salle est vide... pour l'instant.");
+            System.out.println("Que voulez-vous faire ?\n1. Avancer\n2. Se Reposer");
 
-        boolean alive = fight();
-        if(alive)
-        {
-            System.out.println("\nVous entendez du bruit provenant d'une pièce voisine.\nVoulez-vous continuer ?\n1.Oui\n2.Non\n");
-            String continueChoice = scanner.nextLine();
-
-            if(continueChoice.equals("1"))
-            {
-                secondEncounter();
+            String avancerChoice = scanner.nextLine();
+            if(avancerChoice.equals("1")) {
+                System.out.println("Vous décidez de continuer à avancer...");
             }
             else {
-                System.out.println("Vous quittez le manoir, votre corps demeurera introuvable...");
-            }
-        }
-
-    }
-
-    private boolean fight()
-    {
-        System.out.println("DEBUT DU COMBAT\nLe zombie approche...\n");
-        while(player.isAlive() && zombie.isAlive())
-        {
-            System.out.println(player.getName() + " : " + player.getHealth() + "PV");
-            System.out.println(zombie.getName() + " : " + zombie.getHealth() + "PV");
-            System.out.println("\nQue voulez-vous faire ?\n1. Attaquer\n2. Bloquer");
-            String battleChoice = scanner.nextLine();
-
-            if(battleChoice.equals("1")) {
-                player.attack(zombie);
-            } else if(battleChoice.equals("2")) {
-                System.out.println(player.getName() + " se prépare à bloquer l'attaque !");
-            } else {
-                System.out.println("Action invalide, vous perdez votre tour !");
+                System.out.println("Vous faites une pause pour reprendre votre souffle, mais le manoir est rempli de dangers, vous perdez du temps précieux...");
             }
 
-            if(zombie.isAlive())
-            {
-                if(battleChoice.equals("2"))
-                {
-                    zombie.attackBlocked(player);
+            // Combat toutes les 3 salles
+            if(position % 3 == 0) {
+                System.out.println("Vous entendez des bruits de pas... Un zombie apparaît !");
+                Zombie zombie = new Zombie("Zombie sauvage", 50 + position, 10 + position);
+
+                // Lancement du combat
+                boolean alive = combat.start(player, zombie);
+
+                // Vérification de la vie avant de proposer de continuer
+                if (!alive) {
+                    System.out.println("Game Over !");
+                    break; // on sort de la boucle si le joueur est mort
                 }
-                else
-                {
-                    zombie.attack(player);
+
+                // Proposer de continuer seulement si le joueur est vivant
+                System.out.println("Vous entendez du bruit au loin, que voulez-vous faire ?\n1. Avancer\n2. Se Reposer\n3. Fuir");
+                String continueChoice = scanner.nextLine();
+
+                if(continueChoice.equals("1")) {
+                    System.out.println("Vous décidez de continuer à avancer...");
                 }
-                System.out.println("\nTOUR SUIVANT\n");
+                else if(continueChoice.equals("2")) {
+                    System.out.println("Vous faites une pause pour reprendre votre souffle, mais le manoir est rempli de dangers, vous perdez du temps précieux...");
+                }
+                else {
+                    System.out.println("Vous faites demi-tour et quittez le manoir, votre corps demeurera introuvable...");
+                    break; // sortie du jeu
+                }
             }
 
         }
-        if(player.isAlive()){
-            System.out.println(player.getName() + " a vaincu le zombie !");
-            return true; //rend possible le fait de continuer la partie
-        }
-        else
-        {
-            System.out.println(player.getName() + " est mort...");
-            return false;//rend impossible de continuer la partie, bah oui t'es mort
-        }
-    }
-
-
-
-    private void secondEncounter()
-    {
-        System.out.println("NOUVELLE SALLE\nUn nouveau zombie surgit !\n");
-        zombie = new Zombie("Zombie affamé", 80, 20);
-        fight();
-    }
-
-
-    private int rollDice()
-    {
-        return random.nextInt(6)+1;
-    }
-
-    private void avancer()
-    {
-        System.out.println("Appuyez sur Entrée pour lancer le dé...");
-        scanner.nextLine();
-
-        int dice = rollDice();
-        System.out.println("Résultat du dé : "+ dice);
-
-        player.move(dice);
-        System.out.println(player.getName() + " est maintenant dans la salle numéro " + player.getPlayerPosition());
     }
 }
