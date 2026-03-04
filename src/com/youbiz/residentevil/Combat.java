@@ -1,51 +1,43 @@
 package com.youbiz.residentevil;
+import com.youbiz.residentevil.characters.Player;
+import com.youbiz.residentevil.enemies.Enemy;
 
 import java.util.Scanner;
 
 public class Combat {
-
     private Scanner scanner;
 
     public Combat(Scanner scanner) {
         this.scanner = scanner;
     }
 
-    public boolean start(Player player, Zombie zombie) {
+    public boolean start(Player player, Enemy enemy) {
+        System.out.println("Un "+ enemy.getName() + " apparaît !");
 
-        System.out.println("DEBUT DU COMBAT\nLe zombie approche...\n");
+        while(player.isAlive() && enemy.isAlive()) {
+            System.out.println("\n" + player.getName() + " : " + player.getHealth() + "PV");
+            System.out.println(enemy.getName() + " : " + enemy.getHealth() + "PV");
 
-        while(player.isAlive() && zombie.isAlive()) {
+            System.out.println("1. Attaquer\n2. Bloquer");
+            String choice = scanner.nextLine();
 
-            System.out.println(player.getName() + " : " + player.getHealth() + " PV");
-            System.out.println(zombie.getName() + " : " + zombie.getHealth() + " PV");
-            System.out.println("\nQue voulez-vous faire ?\n1. Attaquer\n2. Bloquer");
+            boolean playerBlocks = choice.equals("2");
 
-            String battleChoice = scanner.nextLine();
-
-            if(battleChoice.equals("1")) {
-                player.attack(zombie);
-            }
-            else if(battleChoice.equals("2")) {
-                System.out.println(player.getName() + " se prépare à bloquer l'attaque !");
-            }
-            else {
-                System.out.println("Action invalide, vous perdez votre tour !");
+            if(choice.equals("1")) {
+                player.attack(enemy);
+            } else if(playerBlocks) {
+                System.out.println(player.getName() + " se prépare à bloquer !");
+            } else {
+                System.out.println("Action invalide !");
             }
 
-            if(zombie.isAlive()) {
-                if(battleChoice.equals("2")) {
-                    zombie.attackBlocked(player);
-                }
-                else {
-                    zombie.attack(player);
-                }
-
-                System.out.println("\nTOUR SUIVANT\n");
+            if(enemy.isAlive()) {
+                enemy.attack(player, playerBlocks);
             }
         }
 
         if(player.isAlive()) {
-            System.out.println(player.getName() + " a vaincu le zombie !");
+            System.out.println(player.getName() + " a vaincu " + enemy.getName() + " !");
             return true;
         } else {
             System.out.println(player.getName() + " est mort...");

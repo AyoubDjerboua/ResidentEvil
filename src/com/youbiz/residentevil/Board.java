@@ -1,4 +1,6 @@
 package com.youbiz.residentevil;
+import com.youbiz.residentevil.characters.Player;
+
 import java.util.Random;
 
 public class Board {
