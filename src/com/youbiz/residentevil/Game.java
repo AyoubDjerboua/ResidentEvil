@@ -1,18 +1,39 @@
 package com.youbiz.residentevil;
+import com.youbiz.residentevil.characters.Player;
+//import com.youbiz.residentevil.enemies.Zombie;
+//import com.youbiz.residentevil.enemies.Cerberus;
+import com.youbiz.residentevil.enemies.* ;//appelle direct tous les ennemis
+
 import java.util.Scanner;
+import java.util.Random;
 
 public class Game
 {
     private Player player;
-    private Zombie zombie;
     Scanner scanner = new Scanner(System.in);
+    Random random = new Random(); // pour choisir les ennemis aléatoirement
 
     public void start()
     {
         Combat combat = new Combat(scanner);
 
         // Choix du personnage
-        System.out.println("RESIDENT EVIL\nChoisissez votre personnage :");
+        System.out.println("""
+██████╗ ███████╗███████╗██╗██████╗ ███████╗███╗   ██╗████████╗
+██╔══██╗██╔════╝██╔════╝██║██╔══██╗██╔════╝████╗  ██║╚══██╔══╝
+██████╔╝█████╗  ███████╗██║██║  ██║█████╗  ██╔██╗ ██║   ██║
+██╔══██╗██╔══╝  ╚════██║██║██║  ██║██╔══╝  ██║╚██╗██║   ██║
+██║  ██║███████╗███████║██║██████╔╝███████╗██║ ╚████║   ██║
+╚═╝  ╚═╝╚══════╝╚══════╝╚═╝╚═════╝ ╚══════╝╚═╝  ╚═══╝   ╚═╝
+
+███████╗██╗   ██╗██╗██╗
+██╔════╝██║   ██║██║██║
+█████╗  ██║   ██║██║██║
+██╔══╝  ╚██╗ ██╔╝██║██║
+███████╗ ╚████╔╝ ██║███████╗
+╚══════╝  ╚═══╝  ╚═╝╚══════╝
+""");
+        System.out.println("\nChoisissez votre personnage :");
         System.out.println("1. Chris Redfield (100 HP, 15 dégâts, 15 de défense");
         System.out.println("2. Jill Valentine (80HP, 20 dégâts , 5 de défense");
         String choice = scanner.nextLine();
@@ -36,7 +57,7 @@ public class Game
         System.out.println(player.getName() + " entre dans le manoir");
 
         Board board = new Board();
-        for(int i = 0; i < 20; i++) // nombre de tours
+        for(int i = 0; i < 10; i++) // nombre de tours
         {
             board.avancer(player);
             int position = player.getPlayerPosition();
@@ -49,16 +70,17 @@ public class Game
                 System.out.println("Vous décidez de continuer à avancer...");
             }
             else {
-                System.out.println("Vous faites une pause pour reprendre votre souffle, mais le manoir est rempli de dangers, vous perdez du temps précieux...");
+                System.out.println("Vous vous endormez et devenez le repas d'un zombie...\nGAME OVER");
+                break; // sortie du jeu
             }
 
-            // Combat toutes les 3 salles
-            if(position % 3 == 0) {
-                System.out.println("Vous entendez des bruits de pas... Un zombie apparaît !");
-                Zombie zombie = new Zombie("Zombie sauvage", 50 + position, 10 + position);
+
+            if(position % 2 == 0) { //toutes les salles multiples de 2 contiennent un zombie
+                System.out.println("Vous entendez des bruits...");
+                Enemy enemy = getRandomEnemy(position);
 
                 // Lancement du combat
-                boolean alive = combat.start(player, zombie);
+                boolean alive = combat.start(player, enemy);
 
                 // Vérification de la vie avant de proposer de continuer
                 if (!alive) {
@@ -81,7 +103,20 @@ public class Game
                     break; // sortie du jeu
                 }
             }
+        }
+    }
 
+    private Enemy getRandomEnemy(int position) {
+        int enemyType = random.nextInt(3); // 3 types d'ennemis
+        switch (enemyType) {
+            case 0:
+                return new Zombie("Zombie sauvage", 50 + position, 5 + position);
+            case 1:
+                return new Cerberus("Cerbère enragé", 80 + position, 10 + position);
+            case 2:
+                return new Hunter("Hunter", 100 + position, 15 + position);
+            default:
+                return new Zombie("Zombie sauvage", 50 + position, 10 + position);
         }
     }
 }

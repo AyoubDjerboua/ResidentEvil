@@ -1,4 +1,6 @@
-package com.youbiz.residentevil;
+package com.youbiz.residentevil.characters;
+
+import com.youbiz.residentevil.enemies.Enemy;
 
 public class Player {
     private String playerName;
@@ -16,10 +18,10 @@ public class Player {
         this.playerPosition = 0;
     }
 
-    public void attack(Zombie zombie)
+    public void attack(Enemy enemy)
     {
-        System.out.println(playerName + " attaque le " + zombie.getName());
-        zombie.takeDamage(playerDamage);
+        System.out.println(playerName + " attaque le " + enemy.getName());
+        enemy.takeDamage(playerDamage);
     }
 
     public void takeDamage(int damage)
