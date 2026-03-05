@@ -1,8 +1,7 @@
 package com.youbiz.residentevil.enemies;
-
 import com.youbiz.residentevil.characters.Player;
 
-public abstract class Enemy {
+public abstract class Enemy { // classe abstraite pour les ennemis, chaque type d'ennemi implémente ses propres caractéristiques
     protected String name;
     protected int health;
     protected int damage;
