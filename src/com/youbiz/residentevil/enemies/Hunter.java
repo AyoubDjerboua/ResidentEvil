@@ -8,7 +8,7 @@ public class Hunter extends Enemy {
     }
 
     // Comportement spécifique de Zombie
-    @Override
+    @Override//@Override indique que cette méthode redéfinit une méthode de la classe parente
     public void attack(Player player, boolean playerBlocks) {
         if(playerBlocks) {
             int imblockableDamage = damage;
