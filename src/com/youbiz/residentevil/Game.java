@@ -1,7 +1,9 @@
 package com.youbiz.residentevil;
-import com.youbiz.residentevil.characters.BarryBurton;
-import com.youbiz.residentevil.characters.*;//appelle tous les personnages
-import com.youbiz.residentevil.enemies.* ;//appelle direct tous les ennemis
+import com.youbiz.residentevil.model.characters.BarryBurton;
+import com.youbiz.residentevil.model.characters.*;//appelle tous les personnages
+import com.youbiz.residentevil.model.enemies.* ;//appelle direct tous les ennemis
+import com.youbiz.residentevil.model.Enemy;
+import com.youbiz.residentevil.model.Player;
 
 import java.util.Scanner;
 import java.util.Random;
@@ -21,9 +23,9 @@ public class Game
         ██╔══██╗██╔════╝██╔════╝██║██╔══██╗██╔════╝████╗  ██║╚══██╔══╝
         ██████╔╝█████╗  ███████╗██║██║  ██║█████╗  ██╔██╗ ██║   ██║
         ██╔══██╗██╔══╝  ╚════██║██║██║  ██║██╔══╝  ██║╚██╗██║   ██║
-        █       █║  ██║███████╗███████║██║██████╔╝███████╗██║ ╚████║   ██║
+        ██║  ██║███████╗███████║██║██████╔╝███████╗██║ ╚████║   ██║
         ╚═╝  ╚═╝╚══════╝╚══════╝╚═╝╚═════╝ ╚══════╝╚═╝  ╚═══╝   ╚═╝
-        
+
         ███████╗██╗   ██╗██╗██╗
         ██╔════╝██║   ██║██║██║
         █████╗  ██║   ██║██║██║
@@ -36,9 +38,9 @@ public class Game
         Player player = null;
         while(player == null) {
             System.out.println("\nChoisissez votre personnage :");
-            System.out.println("1. Chris Redfield" + " (120HP, 20 dégâts, 15 de défense)");
-            System.out.println("2. Jill Valentine" + " (80HP, 30 dégâts, 5 de défense)");
-            System.out.println("3. Barry Burton (100 HP, 50 dégâts, 10 défense)");
+            System.out.println("1." + new ChrisRedfield());
+            System.out.println("2." + new JillValentine());
+            //System.out.println("3." + new BarryBurton()); existe mais caché
 
             String characterChoice = scanner.nextLine();
             switch (characterChoice) {
@@ -55,7 +57,7 @@ public class Game
         for(int i = 0; i < 10; i++) // nombre de lancers de dés, donc nombre de salles à explorer
         {
             board.avancer(player);
-            int position = player.getPlayerPosition();
+            int position = player.getPosition();
 
             if(position % 2 == 0) { //toutes les salles multiples de 2 contiennent un zombie
                 System.out.println("Vous entendez des bruits inquiétants...");

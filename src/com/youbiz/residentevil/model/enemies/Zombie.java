@@ -1,5 +1,6 @@
-package com.youbiz.residentevil.enemies;
-import com.youbiz.residentevil.characters.Player;
+package com.youbiz.residentevil.model.enemies;
+import com.youbiz.residentevil.model.Enemy;
+import com.youbiz.residentevil.model.Player;
 
 public class Zombie extends Enemy {
 
@@ -10,13 +11,16 @@ public class Zombie extends Enemy {
     // Comportement spécifique de Zombie
     @Override
     public void attack(Player player, boolean playerBlocks) {
+        super.attack(player, playerBlocks);
+
         if(playerBlocks) {
-            int reducedDamage = damage - player.getBlockValue();
+            int reducedDamage = damage - player.getBlock();
             if(reducedDamage < 0) reducedDamage = 0; // évite les PV négatifs
-            System.out.println("L'attaque de " + name + " est bloquée. Dégâts réduits à " + reducedDamage);
+
+            System.out.println(player.getName() + " se prépare à bloquer !");
             player.takeDamage(reducedDamage);
+
         } else {
-            System.out.println(name + " attaque " + player.getName() + " pour " + damage + " dégâts !");
             player.takeDamage(damage);
         }
     }

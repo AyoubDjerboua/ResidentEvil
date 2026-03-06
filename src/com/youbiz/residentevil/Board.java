@@ -1,5 +1,5 @@
 package com.youbiz.residentevil;
-import com.youbiz.residentevil.characters.Player;
+import com.youbiz.residentevil.model.Player;
 
 import java.util.Random;
 
@@ -22,6 +22,6 @@ public class Board {
         player.move(dice);
         System.out.println(player.getName() +
                 " est maintenant dans la salle numéro " +
-                player.getPlayerPosition());
+                player.getPosition());
     }
 }
