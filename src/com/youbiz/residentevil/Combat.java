@@ -1,6 +1,6 @@
 package com.youbiz.residentevil;
-import com.youbiz.residentevil.characters.Player;
-import com.youbiz.residentevil.enemies.Enemy;
+import com.youbiz.residentevil.model.Player;
+import com.youbiz.residentevil.model.Enemy;
 
 import java.util.Scanner;
 
@@ -17,10 +17,9 @@ public class Combat {
         while(player.isAlive() && enemy.isAlive()) {
             System.out.println("\n" + player.getName() + " : " + player.getHealth() + "PV");
             System.out.println(enemy.getName() + " : " + enemy.getHealth() + "PV");
-
             System.out.println("1. Attaquer\n2. Bloquer");
-            String choice = scanner.nextLine();
 
+            String choice = scanner.nextLine();
             boolean playerBlocks = choice.equals("2");
 
             if(choice.equals("1")) {

@@ -1,5 +1,4 @@
-package com.youbiz.residentevil.enemies;
-import com.youbiz.residentevil.characters.Player;
+package com.youbiz.residentevil.model;
 
 public abstract class Enemy { // classe abstraite pour les ennemis, chaque type d'ennemi implémente ses propres caractéristiques
     protected String name;
@@ -13,7 +12,10 @@ public abstract class Enemy { // classe abstraite pour les ennemis, chaque type 
     }
 
     // Méthode pour attaquer le joueur : chaque ennemi l'implémente différemment
-    public abstract void attack(Player player, boolean playerBlocks);
+    public void attack(Player player, boolean playerBlocks)
+    {
+        System.out.println("Le " + name + " attaque (" + damage + ")");
+    }
 
     public void takeDamage(int damage) {
         health -= damage;
