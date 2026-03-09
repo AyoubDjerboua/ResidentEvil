@@ -14,7 +14,7 @@ public abstract class Enemy { // classe abstraite pour les ennemis, chaque type 
     // Méthode pour attaquer le joueur : chaque ennemi l'implémente différemment
     public void attack(Player player, boolean playerBlocks)
     {
-        System.out.println("Le " + name + " attaque (" + damage + ")");
+        System.out.println(name + " attaque (" + damage + ")");
     }
 
     public void takeDamage(int damage) {

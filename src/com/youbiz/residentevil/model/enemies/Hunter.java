@@ -4,8 +4,8 @@ import com.youbiz.residentevil.model.Player;
 
 public class Hunter extends Enemy {
 
-    public Hunter(String name, int health, int damage) {
-        super(name, health, damage);
+    public Hunter() {
+        super("Hunter", 100, 20);
     }
 
     // Comportement spécifique de Hunter

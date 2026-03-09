@@ -4,7 +4,7 @@ import com.youbiz.residentevil.model.Player;
 
 public class Cerberus extends Enemy {
 
-    public Cerberus(String name, int health, int damage) {
+    public Cerberus() {
         super("Cerbère", 50, 10);
     }
 
