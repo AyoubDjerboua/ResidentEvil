@@ -22,7 +22,7 @@ public class Player {
 
     public void attack(Enemy enemy)
     {
-        System.out.println(name + " attaque à "+ damage + " le " + enemy.getName());
+        System.out.println(name + " attaque (" + damage + ") !");
         enemy.takeDamage(damage);
     }
 

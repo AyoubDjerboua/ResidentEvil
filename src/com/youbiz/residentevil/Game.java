@@ -54,7 +54,7 @@ public class Game
 
 
         Board board = new Board();
-        for(int i = 0; i < 10; i++) // nombre de lancers de dés, donc nombre de salles à explorer
+        for(int i = 0; i < 20; i++) // nombre de lancers de dés, donc nombre de salles à explorer
         {
             board.avancer(player);
             int position = player.getPosition();
@@ -126,16 +126,18 @@ public class Game
     }
 
     private Enemy getRandomEnemy(int position) { //la position du joueur influence la difficulté des ennemis rencontrés
-        int enemyType = random.nextInt(3); // 3 types d'ennemis
+        int enemyType = random.nextInt(4); // 3 types d'ennemis
         switch (enemyType) {
             case 0:
-                return new Zombie("Zombie sauvage", 50 + position, 5 + position);
+                return new Zombie();
             case 1:
-                return new Cerberus("Cerbère enragé", 80 + position, 10 + position);
+                return new Cerberus();
             case 2:
-                return new Hunter("Hunter", 100 + position, 15 + position);
+                return new Hunter();
+            case 3:
+                return new Crow();
             default:
-                return new Zombie("Zombie sauvage", 50 + position, 10 + position);
+                return new Zombie();
         }
     }
 }
