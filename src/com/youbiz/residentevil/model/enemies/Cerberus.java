@@ -5,7 +5,7 @@ import com.youbiz.residentevil.model.Player;
 public class Cerberus extends Enemy {
 
     public Cerberus() {
-        super("Cerbère", 50, 10);
+        super("Cerbère", 75, 10);
     }
 
     // Comportement spécifique de Cerberus

@@ -67,8 +67,7 @@ public class Game
                 boolean alive = combat.start(player, enemy);
 
                 // Vérification de la vie avant de proposer de continuer
-                if (!alive)
-                {
+                if (!alive) {
                     System.out.println("Game Over !");
                     break; // on sort de la boucle si le joueur est mort
                 }

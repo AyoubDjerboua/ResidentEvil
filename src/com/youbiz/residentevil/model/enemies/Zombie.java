@@ -5,7 +5,7 @@ import com.youbiz.residentevil.model.Player;
 public class Zombie extends Enemy {
 
     public Zombie() {
-        super("Zombie", 60, 10);
+        super("Zombie", 50, 10);
     }
 
     // Comportement spécifique de Zombie

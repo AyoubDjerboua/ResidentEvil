@@ -1,13 +1,16 @@
 package com.youbiz.residentevil.model;
+import com.youbiz.residentevil.model.items.equipment.Weapon;
 
 public class Player {
     protected String name;
     protected int health;
-    protected int maxHealth;
-    protected int damage;
-    protected int defense;
+    protected int maxHealth; //garde
+    protected int damage;//dgts de base sans armes
+    protected int defense;//défense de base sans armures
     protected int block;
     protected int position;
+
+    private Weapon weapon;
 
     public Player (String name, int health, int damage, int defense, int block)
     {
@@ -18,12 +21,22 @@ public class Player {
         this.defense = defense;
         this.block = block;
         this.position = 0;
+        this.weapon = null; //le joueur commence sans arme
+    }
+
+    public void equipWeapon(Weapon newWeapon)
+    {
+        this.weapon = newWeapon;
+        //System.out.println(name + " équipe " + weapon.getName() + " !");
     }
 
     public void attack(Enemy enemy)
     {
-        System.out.println(name + " attaque (" + damage + ") !");
-        enemy.takeDamage(damage);
+        int totalDamage = damage;
+        if(weapon != null) totalDamage += weapon.getAttackBonus(); //ajoute les bonus de l'arme si le joueur en a une
+
+        System.out.println(name + " attaque (" + totalDamage + ") !");
+        enemy.takeDamage(totalDamage);
     }
 
     public void block(int damage)
@@ -85,5 +98,7 @@ public class Player {
     public int getPosition() { return position; }
 
     public int getMaxHealth() { return maxHealth; }
+
+    public Weapon getWeapon() { return weapon; }
 }
 
