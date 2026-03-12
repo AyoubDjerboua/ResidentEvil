@@ -9,7 +9,7 @@ public class Board {
     private int compteurLancers = 0;
 
     public int rollDice() {
-        return random.nextInt(3) + 1;
+        return random.nextInt(6) + 1;
     }
 
     public void avancer(Player player) {

@@ -12,7 +12,6 @@ public class Combat {
     }
 
     public boolean start(Player player, Enemy enemy) {
-        System.out.println("Un "+ enemy.getName() + " apparaît !");
 
         while(player.isAlive() && enemy.isAlive()) {
             System.out.println("\n" + player.getName() + " : " + player.getHealth() + "PV");
