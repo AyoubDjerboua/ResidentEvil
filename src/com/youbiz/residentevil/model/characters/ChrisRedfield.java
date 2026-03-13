@@ -1,5 +1,6 @@
 package com.youbiz.residentevil.model.characters;
 import com.youbiz.residentevil.model.Player;
+import com.youbiz.residentevil.model.items.equipment.Weapon;
 import com.youbiz.residentevil.model.items.equipment.weapons.*;
 
 public class ChrisRedfield extends Player {
@@ -10,6 +11,11 @@ public class ChrisRedfield extends Player {
         //Starting weapon
         Pistol pistol = new Pistol();
         this.equipWeapon(pistol);
+    }
+
+    @Override
+    public void equipWeapon(Weapon newWeapon) {
+
     }
 }
 

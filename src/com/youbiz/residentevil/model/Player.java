@@ -1,7 +1,7 @@
 package com.youbiz.residentevil.model;
 import com.youbiz.residentevil.model.items.equipment.Weapon;
 
-public class Player {
+public abstract class Player {
     protected String name;
     protected int health;
     protected int maxHealth; //garde
@@ -24,11 +24,11 @@ public class Player {
         this.weapon = null; //le joueur commence sans arme
     }
 
-    public void equipWeapon(Weapon newWeapon)
-    {
+    public abstract void equipWeapon(Weapon newWeapon);
+    /*{
         this.weapon = newWeapon;
         //System.out.println(name + " équipe " + weapon.getName() + " !");
-    }
+    }*/
 
     public void attack(Enemy enemy)
     {
